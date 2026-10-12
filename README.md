@@ -14,7 +14,7 @@ There are two projects:
 
 | Directory | What it is |
 |---|---|
-| `summitcare-api/` | Rails 8.0 API (plus a small staff console) on PostgreSQL 16 |
+| `summitcare-api/` | Rails 8.1 API (plus a small staff console) on PostgreSQL 16 |
 | `SummitCare/` | Swift 6 / SwiftUI iOS 26 app, a Notification Service Extension, and unit tests, generated with XcodeGen |
 
 `BOOK-CORRECTIONS.md` lists every code change the manuscript needs, as
@@ -158,11 +158,8 @@ Paths are relative to `summitcare-api/` (Rails) or `SummitCare/` (iOS).
   - Every AWS client is stubbed in tests.
   - `RestoreIntegrityCheck` and `BackupRestoreDrillJob` need a real restored RDS instance, so no test exercises them.
   - The iOS `ContactPreferencesModel` doesn't send a save request to the API.
-- **`json` gem pinned below 3.** json 3.0 removed the `quirks_mode:` option
-  that ActiveSupport 8.0.5.1 still passes.
-- **Rails 8.0 end of life.** Brakeman's one remaining warning is that
-  support for Rails 8.0 ends on 2026-11-07. Upgrade to Rails 8.1 before
-  then.
+- **Rails 8.1.** The API runs on Rails 8.1.4 with `config.load_defaults 8.1`.
+  Brakeman reports no warnings, and bundler-audit reports no vulnerabilities.
 - **Solution 27 test.** The partner test sends a bearer API key as well as
   the HMAC signature, because the controller authenticates the credential
   before it checks the signature. The test has a comment explaining this.

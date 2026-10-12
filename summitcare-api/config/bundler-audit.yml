@@ -1,0 +1,4 @@
+# Audit all gems listed in the Gemfile for known security problems by running bin/bundler-audit.
+# List a CVE here only with a written reason it does not apply (Solution 33).
+
+ignore: []
