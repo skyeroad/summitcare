@@ -1,0 +1,17 @@
+test:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
+
+# Private bucket with SSE-KMS default encryption (Solution 9). Credentials come
+# from the EC2 instance role, never from an access key (Solution 34).
+amazon:
+  service: S3
+  bucket: summitcare-phi-documents
+  region: us-east-1
+  upload:
+    server_side_encryption: "aws:kms"
+    ssekms_key_id: "arn:aws:kms:us-east-1:111122223333:alias/summitcare-documents"

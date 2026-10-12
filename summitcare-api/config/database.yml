@@ -1,0 +1,52 @@
+# PostgreSQL. Development and test connect over the local Unix socket
+# (override with PGHOST / PGUSER, or DATABASE_URL).
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("PGHOST", "/tmp") %>
+  username: <%= ENV.fetch("PGUSER", "postgres") %>
+
+development:
+  primary:
+    <<: *default
+    database: summitcare_development
+  analytics:
+    <<: *default
+    database: summitcare_analytics_development
+    migrations_paths: db/analytics_migrate
+
+test:
+  primary:
+    <<: *default
+    database: summitcare_test
+  analytics:
+    <<: *default
+    database: summitcare_analytics_test
+    migrations_paths: db/analytics_migrate
+
+# Production: TLS with certificate verification on every connection (Solution 10).
+# The analytics database has its own role and credentials (Solution 22).
+production:
+  primary: &primary_production
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    sslmode: verify-full
+    sslrootcert: /rails/config/certs/rds-global-bundle.pem
+  analytics:
+    <<: *default
+    database: summitcare_analytics
+    username: summitcare_deid_writer
+    password: <%= ENV["ANALYTICS_DATABASE_PASSWORD"] %>
+    host: <%= ENV["ANALYTICS_DATABASE_HOST"] %>
+    sslmode: verify-full
+    sslrootcert: /rails/config/certs/rds-global-bundle.pem
+    migrations_paths: db/analytics_migrate
+  cache:
+    <<: *primary_production
+    url: <%= ENV["CACHE_DATABASE_URL"] %>
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    url: <%= ENV["QUEUE_DATABASE_URL"] %>
+    migrations_paths: db/queue_migrate

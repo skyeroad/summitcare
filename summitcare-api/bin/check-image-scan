@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# bin/check-image-scan (Solution 33): block a deploy whose image has critical
+# or high ECR scan findings. Needs GIT_SHA, the AWS CLI, and jq.
+set -euo pipefail
+for _ in $(seq 60); do # enhanced scanning reports ACTIVE, basic scanning COMPLETE
+  status=$(aws ecr describe-image-scan-findings --repository-name summitcare-api \
+    --image-id imageTag="$GIT_SHA" --query 'imageScanStatus.status' --output text)
+  [[ "$status" == COMPLETE || "$status" == ACTIVE ]] && break
+  sleep 10
+done
+[[ "$status" == COMPLETE || "$status" == ACTIVE ]] || { echo "Scan not finished: $status"; exit 1; }
+counts=$(aws ecr describe-image-scan-findings --repository-name summitcare-api \
+  --image-id imageTag="$GIT_SHA" --query 'imageScanFindings.findingSeverityCounts' --output json)
+blocking=$(echo "$counts" | jq '(.CRITICAL // 0) + (.HIGH // 0)')
+if [ "$blocking" -gt 0 ]; then
+  echo "Image $GIT_SHA has $blocking critical or high findings. Not deploying."
+  exit 1
+fi

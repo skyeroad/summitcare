@@ -1,0 +1,4 @@
+# ZIP3 areas with 20,000 or fewer residents, which Safe Harbor requires as "000".
+# Regenerate from current Census data; this list reflects HHS guidance based on the 2000 Census.
+["036", "059", "063", "102", "203", "556", "692", "790", "821",
+ "823", "830", "831", "878", "879", "884", "890", "893"]

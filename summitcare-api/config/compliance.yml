@@ -1,0 +1,14 @@
+# Column-name patterns that look like PHI (Solution 35). Reviewed by the compliance officer.
+shared:
+  phi_column_patterns:
+    - '\A(first|last)_name\z'
+    - '\Adate_of_birth\z'
+    - '\Amrn\z'
+    - 'phone'
+    - '\Aemail\z'
+    - 'address_line'
+    - 'postal_code'
+    - '\A(body|notes|destination)\z'
+    - 'ssn|diagnosis'
+  phi_column_exemptions:      # "Model#column": "why this is not PHI, risk analysis reference"
+    "Patient#phone_bidx": "Keyed HMAC blind index (Solution 7); not reversible without its key"

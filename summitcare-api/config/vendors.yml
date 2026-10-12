@@ -1,0 +1,57 @@
+# Vendor registry (Solution 23). Every outside service, the SDKs that belong to
+# it, and whether a Business Associate Agreement lets it receive PHI.
+vendors:
+  aws:
+    name: Amazon Web Services
+    purpose: Hosting, PostgreSQL, S3, KMS, SES email, Bedrock
+    receives_phi: true
+    baa_signed_on: 2026-01-15
+    baa_document: "contracts/aws/business-associate-addendum"   # reference, not a file in the repo
+    covered_services: [rds, s3, kms, ses, sns, bedrock]
+    data_categories: [demographics, clinical, messages, documents, audit]
+    hosts: ["*.us-east-1.amazonaws.com"]
+    sdks: { gems: [aws-sdk-s3, aws-sdk-kms, aws-sdk-bedrockruntime, aws-sdk-sns, aws-sdk-rds] }
+    review_by: 2027-01-15
+  sentry:
+    name: Sentry
+    purpose: Error tracking, scrubbed before send (Solution 15)
+    receives_phi: false
+    baa_signed_on: null
+    hosts: ["*.ingest.us.sentry.io"]
+    data_categories: [stack_traces]
+    sdks: { gems: [sentry-ruby, sentry-rails], swift_packages: [sentry-cocoa] }
+    review_by: 2027-03-01
+  apple_push:
+    name: Apple Push Notification service
+    purpose: Push wake-ups with generic text and an opaque message ID (Solution 24)
+    receives_phi: false
+    baa_signed_on: null
+    hosts: ["api.push.apple.com", "api.sandbox.push.apple.com"]
+    data_categories: [device_tokens]
+    review_by: 2027-03-01
+  regional_hie:
+    name: Regional Health Information Exchange (fictional)
+    purpose: FHIR R4 queries over mutual TLS (Solution 27)
+    receives_phi: true
+    baa_signed_on: 2026-04-01
+    baa_document: "contracts/regional-hie/baa"
+    hosts: ["fhir.regional-hie.example"]
+    data_categories: [demographics, clinical]
+    review_by: 2027-04-01
+  state_public_health:
+    name: State Department of Health (fictional)
+    purpose: Reportable lab results, a public health disclosure (Solution 19)
+    receives_phi: true
+    # A public health authority is not a business associate (45 CFR 164.512(b)).
+    # OutboundGuard only lets PHI reach vendors with a date here, so this records
+    # the date counsel approved the reporting interface, not a BAA.
+    baa_signed_on: 2026-04-15
+    baa_document: "contracts/state-health/elr-onboarding-approval"
+    hosts: ["elr.health.state.example"]
+    data_categories: [demographics, clinical]
+    review_by: 2027-04-01
+local_libraries:   # code that makes no network calls of its own
+  gems: [pundit, rotp, rqrcode, webauthn, lograge, paper_trail, faraday, prawn, blind_index,
+         bcrypt, rails, pg, puma, solid_cache, solid_queue, bootsnap, kamal, thruster,
+         tzinfo-data, debug, brakeman, bundler-audit, rubocop-rails-omakase]
+  swift_packages: []

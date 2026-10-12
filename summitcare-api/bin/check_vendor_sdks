@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# bin/check_vendor_sdks (Solution 23): fails when a pull request adds a gem or
+# Swift package that config/vendors.yml doesn't list.
+require "bundler"
+require "date"
+require "json"
+require "yaml"
+
+base = ENV.fetch("BASE_REF", "origin/main")
+registry = YAML.load_file(ENV.fetch("VENDOR_REGISTRY", "config/vendors.yml"), permitted_classes: [Date])
+listed = ->(kind) { registry["vendors"].values.flat_map { _1.dig("sdks", kind) || [] } + (registry.dig("local_libraries", kind) || []) }
+
+def at_base(base, path) = `git show #{base}:#{path} 2>/dev/null`
+def gems(lockfile) = lockfile.empty? ? [] : Bundler::LockfileParser.new(lockfile).dependencies.keys
+def pins(resolved) = resolved.empty? ? [] : JSON.parse(resolved).fetch("pins").map { _1["identity"] }
+
+resolved_path = "SummitCare.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
+added = []
+added += gems(File.read("Gemfile.lock")) - gems(at_base(base, "Gemfile.lock")) - listed.("gems") if File.exist?("Gemfile.lock")
+added += pins(File.read(resolved_path)) - pins(at_base(base, resolved_path)) - listed.("swift_packages") if File.exist?(resolved_path)
+
+abort "Unreviewed dependencies: #{added.join(', ')}. Add them to config/vendors.yml." if added.any?
+puts "Vendor registry covers all new dependencies."

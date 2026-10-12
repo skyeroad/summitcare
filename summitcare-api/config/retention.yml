@@ -1,0 +1,23 @@
+# config/retention.yml (Solution 29)
+# Periods are set by the compliance officer with counsel. Do not change without sign-off.
+# Other copies to check when a period changes: PaperTrail versions (clinical_versions),
+# S3 object versions and the -dr replica, RDS backups (35-day window), record exports.
+shared:
+  messages:
+    model: Message
+    years: 10
+    trigger_column: created_at
+    legal_basis: "Clinic medical record policy (state law, adult records)"
+    owner: compliance_officer
+  lab_results:
+    model: LabResult
+    years: 10
+    trigger_column: resulted_at
+    legal_basis: "Clinic medical record policy (state law, adult records)"
+    owner: compliance_officer
+  device_sessions:
+    model: DeviceSession
+    days: 90
+    trigger_column: refresh_expires_at
+    legal_basis: "Operational security data; no clinical retention need"
+    owner: engineering

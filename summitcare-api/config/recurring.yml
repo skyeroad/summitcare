@@ -1,0 +1,30 @@
+# Solid Queue recurring jobs. Each job is introduced in the Solution named beside it.
+production:
+  clear_solid_queue_finished_jobs:
+    command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
+    schedule: every hour at minute 12
+  audit_archive:                       # Solution 14
+    class: AuditArchiveJob
+    schedule: "15 1 * * * UTC"
+  audit_chain_verification:            # Solution 14
+    class: AuditChainVerificationJob
+    schedule: "45 1 * * * UTC"
+  access_anomaly_scan:                 # Solution 17
+    class: AccessAnomalyScanJob
+    schedule: "5 * * * *"
+  record_request_deadlines:            # Solution 18
+    class: RecordRequestDeadlineJob
+    schedule: every day at 7am
+  deidentified_export:                 # Solution 22
+    class: DeidentifiedExportJob
+    queue: maintenance
+    schedule: every day at 3:30am
+  backup_restore_drill:                # Solution 28
+    class: BackupRestoreDrillJob
+    queue: maintenance
+    schedule: "0 3 1 * *"  # 03:00 on the 1st of each month
+  retention_purge:                     # Solution 29
+    class: RetentionPurgeJob
+    queue: maintenance
+    args: ["execute"]
+    schedule: "0 2 * * *"  # 02:00 daily

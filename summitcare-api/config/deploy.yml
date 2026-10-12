@@ -1,0 +1,22 @@
+# Kamal 2 deploy to private EC2 hosts behind an ALB (Solution 34). Hosts are
+# private addresses in the VPC; TLS ends at the load balancer (Solution 10).
+service: summitcare-api
+image: summitcare-api
+servers:
+  web:
+    hosts: [10.20.1.10, 10.20.2.10]
+  job:
+    hosts: [10.20.1.20]
+    cmd: bin/jobs
+registry:
+  server: 111122223333.dkr.ecr.us-east-1.amazonaws.com
+  username: AWS
+  password: [KAMAL_REGISTRY_PASSWORD]
+env:
+  secret: [RAILS_MASTER_KEY]
+  clear:
+    RAILS_LOG_LEVEL: info
+    # The wrapped Active Record Encryption keys (Solution 8), BLIND_INDEX_MASTER_KEY,
+    # DATABASE_URL, and SENTRY_DSN are fetched the same way as RAILS_MASTER_KEY.
+builder:
+  arch: amd64
