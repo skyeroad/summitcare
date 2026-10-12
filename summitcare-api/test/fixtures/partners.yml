@@ -1,0 +1,5 @@
+cascade_reference_lab:
+  name: Cascade Reference Laboratory (fictional)
+  relationship: covered_entity_treatment
+  vendor_key: cascade_reference_lab
+  webhook_secret: synthetic-webhook-secret-not-for-production

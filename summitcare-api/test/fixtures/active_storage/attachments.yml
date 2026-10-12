@@ -1,0 +1,4 @@
+avery_insurance_card_file:
+  name: file
+  record: avery_insurance_card (Document)
+  blob: insurance_card_blob

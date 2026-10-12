@@ -1,0 +1,1 @@
+insurance_card_blob: <%= ActiveStorage::FixtureSet.blob filename: "insurance_card.pdf", content_type: "application/pdf", service_name: "test" %>

@@ -1,0 +1,32 @@
+# Synthetic patients (Solution 32). Never real people.
+avery:
+  user: avery
+  mrn: SC-100231
+  first_name: Avery
+  last_name: Quinn
+  date_of_birth: 1984-03-12
+  phone: "555-0142"
+  phone_bidx: <%= Patient.generate_phone_bidx("555-0142") %>
+  email: avery.quinn@patients.summitcare.example
+  address_line1: 12 Aspen Way
+  city: Boulder
+  state: CO
+  postal_code: "80302"
+
+jordan:
+  user: jordan
+  mrn: SC-100877
+  first_name: Jordan
+  last_name: Ellis
+  date_of_birth: 1991-07-23
+  email: jordan.ellis@patients.summitcare.example
+  state: CO
+  postal_code: "80027"
+
+riley:
+  mrn: SC-101442
+  first_name: Riley
+  last_name: Navarro
+  date_of_birth: 1958-11-02
+  state: CO
+  postal_code: "80501"

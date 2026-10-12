@@ -1,0 +1,19 @@
+avery_a1c:
+  patient: avery
+  ordered_by: dr_okafor
+  test_code: 4548-4
+  test_name: Hemoglobin A1c
+  value: "5.9"
+  unit: "%"
+  reference_range: "4.0-5.6"
+  resulted_at: 2026-09-30 14:00:00
+  notes: Borderline; recheck in 6 months
+
+riley_cbc:
+  patient: riley
+  ordered_by: dr_okafor
+  test_code: 58410-2
+  test_name: Complete blood count panel
+  value: Within normal limits
+  resulted_at: 2026-09-12 10:00:00
+  notes: "Current medications: losartan"

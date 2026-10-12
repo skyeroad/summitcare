@@ -1,0 +1,32 @@
+# Synthetic workforce and patient logins (Solution 32). Password for all: see test_helper.
+<% password_digest = BCrypt::Password.create("synthetic-test-password-2026", cost: BCrypt::Engine::MIN_COST) %>
+
+avery:
+  email_address: avery.quinn@patients.summitcare.example
+  password_digest: <%= password_digest %>
+  role: patient
+
+jordan:
+  email_address: jordan.ellis@patients.summitcare.example
+  password_digest: <%= password_digest %>
+  role: patient
+
+dr_okafor:
+  email_address: sam.okafor@staff.summitcare.example
+  password_digest: <%= password_digest %>
+  role: clinician
+
+pat_lindqvist:
+  email_address: pat.lindqvist@staff.summitcare.example
+  password_digest: <%= password_digest %>
+  role: front_desk
+
+morgan_reyes:
+  email_address: morgan.reyes@staff.summitcare.example
+  password_digest: <%= password_digest %>
+  role: compliance_officer
+
+admin:
+  email_address: it.admin@staff.summitcare.example
+  password_digest: <%= password_digest %>
+  role: admin

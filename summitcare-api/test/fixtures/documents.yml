@@ -1,0 +1,6 @@
+avery_insurance_card:
+  patient: avery
+  uploaded_by: avery
+  kind: insurance_card
+  title: Insurance card (front)
+  checksum: <%= Digest::SHA256.file(Rails.root.join("test/fixtures/files/insurance_card.pdf")).hexdigest %>

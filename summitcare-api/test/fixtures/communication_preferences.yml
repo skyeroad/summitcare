@@ -1,0 +1,10 @@
+avery_email:
+  patient: avery
+  channel: email
+  destination: avery.quinn@patients.summitcare.example
+
+avery_push:
+  patient: avery
+  channel: push
+  destination: synthetic-apns-device-token
+  allow_message_preview: true

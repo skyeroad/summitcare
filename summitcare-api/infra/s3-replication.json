@@ -1,0 +1,19 @@
+{
+  "Role": "arn:aws:iam::111122223333:role/summitcare-s3-replication",
+  "Rules": [{
+    "ID": "phi-documents-dr",
+    "Status": "Enabled",
+    "Priority": 1,
+    "Filter": {},
+    "DeleteMarkerReplication": { "Status": "Enabled" },
+    "SourceSelectionCriteria": {
+      "SseKmsEncryptedObjects": { "Status": "Enabled" }
+    },
+    "Destination": {
+      "Bucket": "arn:aws:s3:::summitcare-phi-documents-dr",
+      "EncryptionConfiguration": {
+        "ReplicaKmsKeyID": "arn:aws:kms:us-west-2:111122223333:alias/summitcare-documents"
+      }
+    }
+  }]
+}
