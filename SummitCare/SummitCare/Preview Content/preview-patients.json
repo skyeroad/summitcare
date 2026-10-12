@@ -1,0 +1,8 @@
+[
+  { "id": 1, "mrn": "SC-100231", "firstName": "Avery", "lastName": "Quinn", "dateOfBirth": "1984-03-12",
+    "phone": "555-0142", "email": "avery.quinn@patients.summitcare.example" },
+  { "id": 2, "mrn": "SC-100877", "firstName": "Jordan", "lastName": "Ellis", "dateOfBirth": "1991-07-23",
+    "phone": null, "email": "jordan.ellis@patients.summitcare.example" },
+  { "id": 3, "mrn": "SC-101442", "firstName": "Riley", "lastName": "Navarro", "dateOfBirth": "1958-11-02",
+    "phone": null, "email": null }
+]
