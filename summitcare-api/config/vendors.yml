@@ -53,5 +53,5 @@ vendors:
 local_libraries:   # code that makes no network calls of its own
   gems: [pundit, rotp, rqrcode, webauthn, lograge, paper_trail, faraday, prawn, blind_index,
          bcrypt, rails, pg, puma, solid_cache, solid_queue, bootsnap, kamal, thruster,
-         tzinfo-data, debug, brakeman, bundler-audit, rubocop-rails-omakase]
+         tzinfo-data, debug, brakeman, bundler-audit, rubocop-rails-omakase, json]
   swift_packages: []
